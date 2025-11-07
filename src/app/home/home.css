@@ -18,7 +18,7 @@
 
 .home-grid {
   width: 100%;
-  max-width: 1800px; /* más ancho, pero no excesivo */
+  max-width: 1000px; /* más ancho, pero no excesivo */
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 32px;
