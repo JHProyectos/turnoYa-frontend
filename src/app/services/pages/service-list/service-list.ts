@@ -1,17 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { Service } from '../../shared/service.interface';
 import { ServiceService } from '../../shared/service.service';
+import { MaterialModule } from '../../../shared/materialModule';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-service-list',
-  imports: [],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MaterialModule,
+    RouterModule,
+    HttpClientModule
+  ],
   templateUrl: './service-list.html',
-  styleUrl: './service-list.css',
+  styleUrls: ['./service-list.css'],
 })
+export class ServiceList implements OnInit {
 
-export class ServiceList {
-
-  displayedColumns: string[] = ['name', 'description', 'price', 'actions'];
+  displayedColumns: string[] = ['name', 'description', 'price', 'duration', 'actions'];
   dataSource: Service[] = [];
   loading = true;
   error: string | null = null;
@@ -53,7 +62,5 @@ export class ServiceList {
       });
     }
   }
-
-
 
 }

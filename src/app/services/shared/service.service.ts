@@ -49,6 +49,20 @@ export class ServiceService {
     );
   }
 
+  getService(id: string) {
+    const url = `${this.apiBase}/${id}`;
+    return this.http.get<any>(url).pipe(
+      map((res) => {
+        const payload = res?.data ?? res;
+        return payload ? this.normalizeService(payload) : null;
+      }),
+      catchError((err) => {
+        console.error('[ServiceService] getService error', err);
+        return of(null);
+      })
+    );
+  }
+
   updateService(id: string, service: Partial<Omit<Service, 'id'>>) {
     const url = `${this.apiBase}/${id}`;
     return this.http.put<any>(url, service).pipe(
