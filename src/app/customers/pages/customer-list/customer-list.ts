@@ -5,7 +5,7 @@ import { Customer } from '../../shared/customer';
 import { CustomerService } from '../../shared/customer.service';
 import { MaterialModule } from '../../../shared/materialModule';
 import { HttpClientModule } from '@angular/common/http';
-import { H } from '@angular/cdk/keycodes';
+
 
 @Component({
   selector: 'app-customer-list',
@@ -20,12 +20,7 @@ import { H } from '@angular/cdk/keycodes';
   styleUrls: ['./customer-list.css'],
 })
 export class CustomerList implements OnInit {
-rejectCustomer(arg0: any) {
-throw new Error('Method not implemented.');
-}
-acceptCustomer(arg0: any) {
-throw new Error('Method not implemented.');
-}
+
   displayedColumns: string[] = ['name', 'email', 'status', 'actions'];
   dataSource: Customer[] = [];
   loading = true;

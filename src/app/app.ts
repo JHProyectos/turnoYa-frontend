@@ -16,21 +16,22 @@ import { filter } from 'rxjs';
 export class App implements OnInit {
   protected readonly title = signal('turnosYa');
   navItems: any;
+  currentSectionPath: string | undefined;
 
   constructor(private router: Router) { }
 
   sections = [
     {
       title: 'Reservas',
-      path: '/booking',
+      path: '/bookings',
      },
     {
       title: 'Clientes',
-      path: '/customer',
+      path: '/customers',
     },
     {
       title: 'Servicios',
-      path: '/service',
+      path: '/services',
     },
   ];
 
@@ -49,7 +50,8 @@ export class App implements OnInit {
         );
 
         this.currentSectionTitle = currentSection ? currentSection.title : '';
-      });
+    this.currentSectionPath = currentSection ? currentSection.path : '';
+  });
   }
 
   navigateTo(path: string) {

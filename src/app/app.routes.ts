@@ -15,15 +15,15 @@ export const routes: Routes = [
   { path: 'bookings', component: BookingListComponent },
   { path: 'customers', component: CustomerList },
   { path: 'services', component: Services },
-  { path: 'booking/new', component: BookingForm },
-  { path: 'booking/:id', component: BookingDetail },
-  { path : 'booking/:id/edit', component: BookingForm },
-  { path: 'customer/new', component: CustomerForm },
-  { path: 'customer/new',  component: CustomerForm },
-  { path: 'customer/:id', component: CustomerDetail },
-  { path : 'customer/:id/edit', component: CustomerForm },
- // { path: 'service/new', component: ServiceForm },
- // { path: 'service/:id', component: ServiceDetail },
- // { path : 'service/:id/edit', component: ServiceForm },*/
+  { path: 'bookings/new', component: BookingForm },
+  { path: 'bookings/:id', component: BookingDetail },
+  { path : 'bookings/:id/edit', component: BookingForm },
+  { path: 'customers/new', component: CustomerForm },
+  { path: 'customers/new',  component: CustomerForm },
+  { path: 'customers/:id', component: CustomerDetail },
+  { path : 'customers/:id/edit', component: CustomerForm },
+ // { path: 'services/new', component: ServiceForm },
+ // { path: 'services/:id', component: ServiceDetail },
+ // { path : 'services/:id/edit', component: ServiceForm },*/
   { path: '**', redirectTo: '' }
 ];

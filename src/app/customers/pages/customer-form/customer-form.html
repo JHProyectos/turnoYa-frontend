@@ -1,1 +1,94 @@
-<p>customer-form works!</p>
+<div class="page-wrapper">
+
+  <header class="page-header">
+    <div>
+      <h1>{{ isEditMode ? 'Editar Cliente' : 'Nuevo Cliente' }}</h1>
+      <p class="subtitle">Completa la información del cliente para continuar</p>
+    </div>
+
+    <button mat-stroked-button color="primary" (click)="onCancel()">
+      <mat-icon>arrow_back</mat-icon>
+      Volver
+    </button>
+  </header>
+
+  <mat-card class="modern-card mat-elevation-z3">
+
+    <form [formGroup]="customerForm" (ngSubmit)="onSubmit()" class="modern-form">
+
+      <!-- Información Personal -->
+      <section class="form-section">
+        <h2 class="section-title">Información Personal</h2>
+
+        <div class="form-grid">
+
+          <!-- Email -->
+          <mat-form-field appearance="outline">
+       
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email" required>
+          </mat-form-field>
+
+          <!-- Nombre -->
+          <mat-form-field appearance="outline">
+       
+            <mat-label>Nombre</mat-label>
+            <input matInput type="text" formControlName="first_name" required>
+          </mat-form-field>
+
+          <!-- Apellido -->
+          <mat-form-field appearance="outline">
+          
+            <mat-label>Apellido</mat-label>
+            <input matInput type="text" formControlName="last_name" required>
+          </mat-form-field>
+
+          <!-- Teléfono -->
+          <mat-form-field appearance="outline">
+        
+            <mat-label>Teléfono</mat-label>
+            <input matInput type="text" formControlName="phone">
+          </mat-form-field>
+
+          <!-- Fecha de nacimiento -->
+          <mat-form-field appearance="outline">
+       
+            <mat-label>Fecha de nacimiento</mat-label>
+            <input matInput type="date" formControlName="birth_date">
+          </mat-form-field>
+
+          <!-- Status -->
+          <mat-form-field appearance="outline">
+ 
+            <mat-label>Estado</mat-label>
+            <input matInput type="text" formControlName="status">
+            <mat-select>
+              <mat-option value="one">Pending</mat-option>
+              <mat-option value="two">Accepted</mat-option>
+              <mat-option value="two">Rejected</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        </div>
+      </section>
+
+      <div class="form-actions">
+        <button mat-stroked-button type="button" (click)="onCancel()">
+          Cancelar
+        </button>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="customerForm.invalid">
+          <mat-icon>{{ isEditMode ? 'save' : 'add' }}</mat-icon>
+          {{ isEditMode ? 'Guardar Cambios' : 'Crear Cliente' }}
+        </button>
+      </div>
+
+    </form>
+
+  </mat-card>
+
+  <div *ngIf="loading" class="loading-shade">
+    <mat-spinner></mat-spinner>
+  </div>
+
+</div>

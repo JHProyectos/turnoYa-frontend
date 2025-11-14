@@ -3,8 +3,9 @@
 
 <nav class="nav-buttons" aria-label="Navegación principal">
 <button mat-button="outlined" [routerLink]="['/']" aria-label="Inicio">Inicio</button>
-<button mat-button [routerLink]="['{{section.path}}']">{{ currentSectionTitle || '' }}</button>
-<!-- <button mat-button routerLink="/perfil" aria-label="Perfil">Perfil</button>-->
+<button mat-button [routerLink]="[currentSectionPath]" *ngIf="currentSectionTitle">
+  {{ currentSectionTitle }}
+</button>
 </nav>
 </div>
 </mat-toolbar>

@@ -11,7 +11,7 @@
     <p>No se encontraron clientes. ¡Ingresa tu primer cliente!</p>
   </div>
 
-
+<div>
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
     <!-- Nombre -->
@@ -49,7 +49,7 @@
       <th mat-header-cell *matHeaderCellDef>Acciones</th>
       <td mat-cell *matCellDef="let customer" class="actions-cell">
         <button mat-icon-button color="primary"
-                [routerLink]="['/customer', customer.id]"
+                [routerLink]="['/customers', customer.id]"
                 matTooltip="Ver detalles">
           <mat-icon>visibility</mat-icon>
         </button>
@@ -58,16 +58,7 @@
                 matTooltip="Eliminar cliente">
           <mat-icon>delete</mat-icon>
         </button>
-        <button mat-icon-button color="warn"
-                (click)="acceptCustomer(customer.id!)"
-                matTooltip="Aceptar cliente">
-          <mat-icon>done</mat-icon>
-        </button>
-                <button mat-icon-button color="warn"
-                (click)="rejectCustomer(customer.id!)"
-                matTooltip="Aceptar cliente">
-          <mat-icon>block</mat-icon>
-        </button>
+        
       </td>
     </ng-container>
 
@@ -80,4 +71,5 @@
     <mat-icon>person_add</mat-icon>
     <span>Agregar Cliente</span>
   </button>
+</div>
 </div>
