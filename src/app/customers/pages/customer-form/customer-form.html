@@ -1,108 +1,115 @@
-<div class="table-container">
-  <div class="table-header">
-    <h2>{{ isEditMode ? 'Editar Cliente' : 'Nuevo Cliente' }}</h2>
-  </div>
-  
-  <mat-card class="form-card mat-elevation-z4">
-    <form [formGroup]="customerForm" (ngSubmit)="onSubmit()" class="customer-form">
-      <mat-card-content>
+<div class="page-wrapper">
+
+  <header class="page-header">
+    <div>
+      <h1>{{ isEditMode ? 'Editar Cliente' : 'Nuevo Cliente' }}</h1>
+      <p class="subtitle">Completa la información del cliente para continuar</p>
+    </div>
+
+    <button mat-stroked-button color="primary" (click)="onCancel()">
+      <mat-icon>arrow_back</mat-icon>
+      Volver
+    </button>
+  </header>
+
+  <mat-card class="modern-card mat-elevation-z3">
+
+    <form [formGroup]="customerForm" (ngSubmit)="onSubmit()" class="modern-form">
+
+      <!-- Información Personal -->
+      <section class="form-section">
+        <h2 class="section-title">Información Personal</h2>
 
         <div class="form-grid">
 
           <!-- Email -->
           <mat-form-field appearance="outline">
+
             <mat-label>Email</mat-label>
             <input matInput type="email" formControlName="email" required>
-            <mat-error *ngIf="customerForm.get('email')?.hasError('required')">
-              El email es obligatorio
-            </mat-error>
-          </mat-form-field>
-
-          <!-- Nombre -->
-          <mat-form-field appearance="outline">
-            <mat-label>Nombre</mat-label>
-            <input matInput type="text" formControlName="first_name" required>
-            <mat-error *ngIf="customerForm.get('first_name')?.hasError('required')">
-              El nombre es obligatorio
-            </mat-error>
-          </mat-form-field>
-
-          <!-- Apellido -->
-          <mat-form-field appearance="outline">
-            <mat-label>Apellido</mat-label>
-            <input matInput type="text" formControlName="last_name" required>
-            <mat-error *ngIf="customerForm.get('last_name')?.hasError('required')">
-              El apellido es obligatorio
-            </mat-error>
           </mat-form-field>
 
           <!-- Contraseña -->
           <mat-form-field appearance="outline">
+
             <mat-label>Contraseña</mat-label>
-            <input matInput type="text" formControlName="password" required>
-            <mat-error *ngIf="customerForm.get('password')?.hasError('required')">
-              La contraseña es obligatoria
-            </mat-error>
+            <input matInput type="password" formControlName="password" [required]="!isEditMode">
+          </mat-form-field>
+
+          <!-- Nombre -->
+          <mat-form-field appearance="outline">
+
+            <mat-label>Nombre</mat-label>
+            <input matInput type="text" formControlName="first_name" required>
+          </mat-form-field>
+
+          <!-- Apellido -->
+          <mat-form-field appearance="outline">
+
+            <mat-label>Apellido</mat-label>
+            <input matInput type="text" formControlName="last_name" required>
           </mat-form-field>
 
           <!-- Teléfono -->
           <mat-form-field appearance="outline">
+
             <mat-label>Teléfono</mat-label>
             <input matInput type="text" formControlName="phone">
           </mat-form-field>
 
           <!-- Fecha de nacimiento -->
           <mat-form-field appearance="outline">
+
             <mat-label>Fecha de nacimiento</mat-label>
             <input matInput type="date" formControlName="birth_date">
-          </mat-form-field>
-
-          <!-- Estado -->
-          <mat-form-field appearance="outline">
-            <mat-label>Estado</mat-label>
-            <mat-select formControlName="status" required>
-              <mat-option value="pending">Pendiente</mat-option>
-              <mat-option value="active">Activo</mat-option>
-              <mat-option value="blocked">Bloqueado</mat-option>
-            </mat-select>
-            <mat-error *ngIf="customerForm.get('status')?.hasError('required')">
-              El estado es obligatorio
-            </mat-error>
+           <!-- <input matInput [matDatepicker]="picker" formControlName="birth_date">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>-->
           </mat-form-field>
 
           <!-- Rol -->
           <mat-form-field appearance="outline">
+
             <mat-label>Rol</mat-label>
             <mat-select formControlName="role" required>
               <mat-option value="customer">Cliente</mat-option>
-              <mat-option value="admin">Admin</mat-option>
+              <mat-option value="admin">Profesional</mat-option>
             </mat-select>
-            <mat-error *ngIf="customerForm.get('role')?.hasError('required')">
-              El rol es obligatorio
-            </mat-error>
+          </mat-form-field>
+
+          <!-- Status -->
+          <mat-form-field appearance="outline">
+
+            <mat-label>Estado</mat-label>
+            <mat-select formControlName="status">
+              <mat-option value="pendin">Pending</mat-option>
+              <mat-option value="accepted">Accepted</mat-option>
+              <mat-option value="rejected">Rejected</mat-option>
+            </mat-select>
           </mat-form-field>
 
         </div>
+      </section>
 
-      </mat-card-content>
-
-      <mat-card-actions align="end">
-        <button mat-button type="button" (click)="onCancel()">
-          <mat-icon>cancel</mat-icon>
+      <div class="form-actions">
+        <button mat-stroked-button type="button" (click)="onCancel()">
           Cancelar
         </button>
 
-        <button mat-raised-button color="primary" type="submit"
-                [disabled]="!customerForm.valid">
+        <button mat-raised-button color="primary" type="submit" [disabled]="customerForm.invalid">
           <mat-icon>{{ isEditMode ? 'save' : 'add' }}</mat-icon>
-          {{ isEditMode ? 'Actualizar' : 'Crear' }}
+          {{ isEditMode ? 'Guardar Cambios' : 'Crear Cliente' }}
         </button>
-      </mat-card-actions>
+      </div>
+      <div>{{ customerForm.invalid ? 'INVALIDO' : 'VALIDO' }}</div>
 
     </form>
+
   </mat-card>
 
   <div *ngIf="loading" class="loading-shade">
     <mat-spinner></mat-spinner>
   </div>
+
 </div>

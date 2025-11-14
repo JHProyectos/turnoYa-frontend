@@ -69,9 +69,9 @@ export class CustomerService {
   }
 
   // PUT /api/customers/:id
-  updateCustomer(id: string, character: Partial<Customer>): Observable<Customer | null> {
+  updateCustomer(id: string, customer: Partial<Customer>): Observable<Customer | null> {
     const url = `${this.apiBase}/${id}`;
-    return this.http.put<any>(url, character).pipe(
+    return this.http.put<any>(url, customer).pipe(
       map(res => this.normalizeCustomer(res?.data ?? res)),
       catchError(err => {
         console.error('[CustomerService] updateCustomer error', err);

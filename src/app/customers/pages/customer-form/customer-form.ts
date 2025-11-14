@@ -5,15 +5,16 @@ import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } fr
 import { last, Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomerService } from '../../shared/customer.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-customer-form',
-  imports: [MaterialModule, ReactiveFormsModule],
+  imports: [MaterialModule, ReactiveFormsModule, CommonModule],
   templateUrl: './customer-form.html',
   styleUrl: './customer-form.css',
 })
 export class CustomerForm {
- 
+
   customerForm!: FormGroup;
   isEditMode = false;
   customerId: string | null = null;
@@ -33,7 +34,7 @@ export class CustomerForm {
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
       password: ['', Validators.required],
-      phone: [''],
+      phone: ['', Validators.required],
       birth_date: [''],
       status: ['pending', Validators.required],
       role: ['customer', Validators.required],
@@ -57,7 +58,7 @@ export class CustomerForm {
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
       password: ['', Validators.required],
-      phone: [''],
+      phone: ['', Validators.required],
       birth_date: [''],
       status: ['pending', Validators.required],
       role: ['customer', Validators.required],
@@ -92,7 +93,7 @@ export class CustomerForm {
             last_name: customer.last_name,
             password: customer.password,
             phone: customer.phone,
-            birth_date: customer.birth_date,
+            birth_date: customer.birth_date ? customer.birth_date.split('T')[0]  : '',
             status: customer.status,
             role: customer.role
           });
@@ -108,19 +109,25 @@ export class CustomerForm {
     );
   }
 
-  addItem(): void {
-    this.items.push(this.fb.control(''));
-  }
+  /* onSubmit(): void {
+    if (this.isEditMode) {
+      this.updateExistingCustomer();
+    } else {
+      this.createCustomer();
+    }
+  }*/
 
-  removeItem(index: number): void {
-    this.items.removeAt(index);
-  }
+
 
   onSubmit(): void {
+    if (this.isEditMode) {
+      this.updateExistingCustomer();
+    } else {
+      this.createCustomer();
+    }
     if (this.customerForm.valid) {
       this.loading = true;
       this.error = null;
-
       const formValue = this.customerForm.value;
       const customerData = {
         ...formValue,
@@ -139,9 +146,9 @@ export class CustomerForm {
         request.subscribe({
           next: (customer) => {
             if (!customer) { //si customer es null
-            this.loading = false;
-            return;
-          }
+              this.loading = false;
+              return;
+            }
             this.loading = false;
             this.router.navigate(['/customers', customer.id]);
           },
@@ -157,6 +164,56 @@ export class CustomerForm {
   onCancel(): void {
     this.router.navigate(['/customers']);
   }
+
+  createCustomer(): void {
+    if (this.customerForm.invalid) return;
+
+    this.loading = true;
+    const customerData = this.customerForm.value;
+
+    this.subscription.add(
+      this.customerService.addCustomer(customerData).subscribe({
+        next: (customer) => {
+          if (!customer) {
+            this.loading = false;
+            return;
+          }
+          this.loading = false;
+          this.router.navigate(['/customers', customer.id]);
+        },
+        error: () => {
+          this.error = 'Error creando cliente. Intenta nuevamente.';
+          this.loading = false;
+        }
+      })
+    );
+  }
+
+
+  updateExistingCustomer(): void {
+    if (this.customerForm.invalid || !this.customerId) return;
+
+    this.loading = true;
+    const customerData = this.customerForm.value;
+
+    this.subscription.add(
+      this.customerService.updateCustomer(this.customerId, customerData).subscribe({
+        next: (customer) => {
+          if (!customer) {
+            this.loading = false;
+            return;
+          }
+          this.loading = false;
+          this.router.navigate(['/customers', customer.id]);
+        },
+        error: () => {
+          this.error = 'Error actualizando cliente. Intenta nuevamente.';
+          this.loading = false;
+        }
+      })
+    );
+  }
+
 
   rejectCustomer(arg0: any) {
     throw new Error('Method not implemented.');
