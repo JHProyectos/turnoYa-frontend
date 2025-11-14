@@ -37,7 +37,7 @@
       <!-- Precio -->
       <ng-container matColumnDef="price">
         <th mat-header-cell *matHeaderCellDef>Precio</th>
-        <td mat-cell *matCellDef="let service">{{ service.price | number:'1.2-2' }}</td>
+        <td mat-cell *matCellDef="let service">${{ service.price | number:'1.2-2' }}</td>
       </ng-container>
 
       <!-- Duración -->
@@ -49,7 +49,7 @@
       <!-- Acciones -->
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>Acciones</th>
-        <td mat-cell *matCellDef="let service" class="actions-cell">
+        <td mat-cell *matCellDef="let service">
           <button mat-icon-button color="primary"
                   [routerLink]="['/services', service.id]"
                   matTooltip="Ver detalles">
