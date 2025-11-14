@@ -1,1 +1,79 @@
-<p>booking-detail works!</p>
+<div class="table-header">
+  <h2>Detalles de la Reserva</h2>
+  <button *ngIf="booking as b"
+          mat-raised-button
+          color="primary"
+          [routerLink]="['/booking', b.id, 'edit']">
+    <mat-icon>edit</mat-icon>
+    Editar
+  </button>
+</div>
+
+<mat-card *ngIf="booking as b" class="detail-card mat-elevation-z4">
+  <mat-card-header>
+    <mat-card-title>
+      Cliente ID: {{ b.client_id }}
+    </mat-card-title>
+
+    <mat-card-subtitle>
+      Estado:
+      <span
+        [ngClass]="{
+          'status-confirmed': b.booking_status === 'confirmed',
+          'status-pending': b.booking_status === 'pending',
+          'status-cancelled': b.booking_status === 'cancelled',
+          'status-completed': b.booking_status === 'completed'
+        }"
+      >
+        {{ b.booking_status | uppercase }}
+      </span>
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="info-section">
+      
+      <!-- Tratamiento -->
+      <div class="info-row">
+        <span class="info-label">Tratamiento:</span>
+        <span class="info-value">{{ b.treatment_id.join(', ') }}</span>
+      </div>
+      <!-- Fecha -->
+      <div class="info-row" *ngIf="b.booking_date">
+        <span class="info-label">📅 Fecha:</span>
+        <span class="info-value">
+          {{ b.booking_date | date: 'dd/MM/yyyy' }}
+        </span>
+      </div>
+      <!-- Hora Inicio -->
+      <div class="info-row">
+        <span class="info-label">⏰ Hora Inicio:</span>
+        <span class="info-value">{{ b.start_time }}</span>
+      </div>
+      <!-- Fecha Creación -->
+      <div class="info-row">
+        <span class="info-label">🕒 Creado el:</span>
+        <span class="info-value">{{ b.created_at | date: 'medium' }}</span>
+      </div>
+
+      <!-- Fecha última actualización -->
+      <div class="info-row">
+        <span class="info-label">🔄 Última actualización:</span>
+        <span class="info-value">{{ b.updated_at | date: 'medium' }}</span>
+      </div>
+
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions align="end">
+    <button mat-button (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+      Volver al listado
+    </button>
+
+    <button mat-button color="warn" (click)="deleteBooking(b.id!)">
+      <mat-icon>delete</mat-icon>
+      Eliminar
+    </button>
+  </mat-card-actions>
+</mat-card>
